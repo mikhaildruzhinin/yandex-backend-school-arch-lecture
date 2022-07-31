@@ -1,3 +1,4 @@
+import argparse
 import logging
 
 from telegram import ForceReply, Update
@@ -35,8 +36,15 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(update.message.text)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--token', type=str, required=True)
+    return parser.parse_args()
+
+
 def main() -> None:
-    application = Application.builder().token("TOKEN").build()
+    args = parse_args()
+    application = Application.builder().token(args.token).build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
