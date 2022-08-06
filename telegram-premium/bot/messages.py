@@ -1,7 +1,6 @@
 import abc
 
 import telegram as tg
-import telegram.ext as tg_ext
 
 
 class BaseMessages(abc.ABC):
@@ -15,15 +14,15 @@ class BaseMessages(abc.ABC):
 
     @abc.abstractmethod
     def echo(self, text: str) -> str:
-        pass
+        raise NotImplemented
 
 
 class RegularUser(BaseMessages):
     def start(self) -> str:
-        return 'Првиет!'
+        return "Hi!"
 
     def help(self) -> str:
-        return 'Вам нужно приобрести подписку'
+        return "You need to subscribe."
 
     def echo(self, text: str) -> str:
         return f'{text}'
@@ -31,13 +30,13 @@ class RegularUser(BaseMessages):
 
 class PremiumUser(RegularUser):
     def start(self) -> str:
-        return 'Здравствуйте!'
+        return "Hello!"
 
     def help(self) -> str:
-        return 'Наш менеджер скоро свяжется с вами!'
+        return "Our manager will contact you soon."
 
 
 def get_messages(user: tg.User) -> BaseMessages:
-    if not user.is_premium:
+    if user.is_premium:
         return PremiumUser()
     return RegularUser()

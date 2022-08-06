@@ -1,3 +1,4 @@
+import argparse
 import logging
 import argparse
 
@@ -7,7 +8,7 @@ from bot import handlers
 
 
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO,
 )
 logger = logging.getLogger(__name__)
@@ -28,5 +29,5 @@ def main() -> None:
     application.run_polling()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
