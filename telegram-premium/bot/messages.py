@@ -1,42 +1,42 @@
 import abc
 
+import telegram as tg
+
 
 class BaseMessages(abc.ABC):
-    @property
     @abc.abstractmethod
-    async def start(self) -> str:
+    def start(self) -> str:
         raise NotImplemented
 
-    @property
     @abc.abstractmethod
-    async def help(self) -> str:
+    def help(self) -> str:
         raise NotImplemented
 
-    @property
     @abc.abstractmethod
-    async def echo(self) -> str:
+    def echo(self, text: str) -> str:
         raise NotImplemented
 
 
 class RegularUser(BaseMessages):
-    @property
-    async def start(self) -> str:
+    def start(self) -> str:
         return "Hi!"
 
-    @property
-    async def help(self) -> str:
+    def help(self) -> str:
         return "You need to subscribe."
 
-    @property
-    async def echo(self, text: str) -> str:
+    def echo(self, text: str) -> str:
         return f'{text}'
 
 
 class PremiumUser(RegularUser):
-    @property
-    async def start(self) -> str:
+    def start(self) -> str:
         return "Hello!"
 
-    @property
-    async def help(self) -> str:
-        raise "Our manager will contact you soon."
+    def help(self) -> str:
+        return "Our manager will contact you soon."
+
+
+def get_messages(user: tg.User) -> BaseMessages:
+    if user.is_premium:
+        return PremiumUser()
+    return RegularUser()
