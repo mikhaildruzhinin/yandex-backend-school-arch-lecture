@@ -20,7 +20,7 @@ class BaseHandler(abc.ABC):
 
     @abc.abstractmethod
     async def handle(
-        update: tg.Update, context: tg_ext.ContextTypes.DEFAULT_TYPE
+        self, update: tg.Update, context: tg_ext.ContextTypes.DEFAULT_TYPE
     ) -> None:
         raise NotImplemented
 
